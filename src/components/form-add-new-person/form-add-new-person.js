@@ -45,7 +45,7 @@ class FormAddNewPerson extends Component {
     const {id, firstName, lastName, email, phone} = this.state;
 
     const person = {
-      id,
+      id: Number(id),
       firstName,
       lastName,
       email,
