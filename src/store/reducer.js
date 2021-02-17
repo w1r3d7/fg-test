@@ -67,7 +67,8 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         data: [action.payload, ...state.data],
-        sortingOption: ''
+        sortingOption: '',
+        searchString: null,
       };
     default:
       return state;
