@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Button, ButtonGroup, Form} from 'react-bootstrap';
 
-
 const formStyle = {
   width: '40%',
   display: 'flex',

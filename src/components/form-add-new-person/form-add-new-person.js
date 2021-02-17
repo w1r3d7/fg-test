@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import NumberFormat from 'react-number-format';
 import {Button, Col, Form} from 'react-bootstrap';
 import {EMAIL_REG, NUMBER_REG, PHONE_REG} from '../../consts';
+import {setNewPerson} from '../../store/actions';
+
 
 
 class FormAddNewPerson extends Component {
@@ -36,6 +40,33 @@ class FormAddNewPerson extends Component {
 
   handleFormSubmit = (evt) => {
     evt.preventDefault();
+    const {setNewPersonAction} = this.props;
+    const {id, firstName, lastName, email, phone} = this.state;
+
+    const person = {
+      id,
+      firstName,
+      lastName,
+      email,
+      phone,
+      description: 'lorem',
+      address: {
+        streetAddress: '5078 Ante Ave',
+        city: 'Semarang',
+        state: 'LA',
+        zip: '89833'
+      }
+    };
+
+    setNewPersonAction(person);
+    this.setState({
+      id: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+
+    });
   }
 
   checkFormValidation = () => {
@@ -88,7 +119,15 @@ class FormAddNewPerson extends Component {
   }
 
   render() {
-    const {id, firstName, lastName, email, phone, validation, formValid} = this.state;
+    const {
+      id,
+      firstName,
+      lastName,
+      email,
+      phone,
+      validation,
+      formValid
+    } = this.state;
     const {
       idValid,
       emailValid,
@@ -160,7 +199,7 @@ class FormAddNewPerson extends Component {
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group controlId="phone" hasValidation>
+            <Form.Group controlId="phone">
               <Form.Label>Phone</Form.Label>
               <NumberFormat
                   onChange={this.handleUserInput}
@@ -187,12 +226,19 @@ class FormAddNewPerson extends Component {
           >
             Add Person
           </Button>
-
         </Form.Row>
       </Form>
     );
   }
 }
 
+FormAddNewPerson.propTypes = {
+  setNewPersonAction: PropTypes.func.isRequired
+};
 
-export default FormAddNewPerson;
+const mapDispatchToProps = (dispatch) => ({
+  setNewPersonAction: (person) => dispatch(setNewPerson(person))
+});
+
+
+export default connect(null, mapDispatchToProps)(FormAddNewPerson);

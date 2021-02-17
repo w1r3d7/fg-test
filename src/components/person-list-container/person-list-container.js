@@ -9,6 +9,7 @@ import {fetchData, selectPaginationPage} from '../../store/actions';
 import Spinner from '../spinner';
 import {getSortedAndFilteredItems} from '../../store/selectors';
 import {personType} from '../../prop-types';
+import ErrorIndicator from '../error-indicator/error-indicator';
 
 class PersonListContainer extends Component {
   componentDidMount() {
@@ -28,7 +29,7 @@ class PersonListContainer extends Component {
     }
 
     if (error) {
-      return <h2>Error</h2>;
+      return <ErrorIndicator />;
     }
 
     return (
@@ -53,8 +54,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  fetchDataAction: fetchData(ownProps.api, dispatch),
+const mapDispatchToProps = (dispatch, {api}) => ({
+  fetchDataAction: fetchData(api, dispatch),
   selectPaginationPageAction: (page) => dispatch(selectPaginationPage(page))
 });
 

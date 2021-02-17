@@ -47,25 +47,13 @@ const getFilteredItems = createSelector(
       }
 
       return items.filter((item) => {
-        const {firstName, lastName, phone, email, id} = item;
+        const newItem = {...item};
+        delete newItem.address;
+        delete newItem.description;
 
-        if (firstName.toLowerCase().includes(searchString)) {
-          return true;
-        }
-
-        if (lastName.toLowerCase().includes(searchString)) {
-          return true;
-        }
-
-        if (phone.toLowerCase().includes(searchString)) {
-          return true;
-        }
-
-        if (email.toLowerCase().includes(searchString)) {
-          return true;
-        }
-
-        return String(id).includes(searchString);
+        return Object.values(newItem).some((value) => (
+          String(value).toLowerCase().includes(searchString)
+        ));
       });
   }
 );

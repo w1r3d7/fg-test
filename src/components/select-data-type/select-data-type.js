@@ -3,22 +3,22 @@ import {connect} from 'react-redux';
 import {compose} from 'redux';
 import PropTypes from 'prop-types';
 import {Button, ButtonGroup} from 'react-bootstrap';
+
 import {DataTypeUrl} from '../../consts';
 import {withApiContext} from '../hoc';
 import {selectDataType} from '../../store/actions';
 
+const selectDataContainerStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center'
+};
 
 const SelectDataType = ({api, selectDataTypeAction}) => {
   const handleDataButtonClick = ({target : { name }}) => {
     const type = name.toUpperCase();
     api.setDataType(DataTypeUrl[type]);
     selectDataTypeAction();
-  };
-
-  const selectDataContainerStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
   };
 
   return (
@@ -38,7 +38,6 @@ SelectDataType.propTypes = {
   }).isRequired,
   selectDataTypeAction: PropTypes.func.isRequired,
 };
-
 
 const mapDispatchToProps = {
   selectDataTypeAction: selectDataType

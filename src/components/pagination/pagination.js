@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Pagination as PaginationBootstap} from 'react-bootstrap';
+
 import {personType} from '../../prop-types';
 
+const paginationListStyle = {
+  flexWrap: 'wrap'
+};
+
+const paginationItemStyle = {
+  width: '5%',
+  marginBottom: '1%'
+};
 
 const Pagination = ({data, resultsOnPage, paginationPage, onPaginationClick}) => {
-  const paginationListStyle = {
-    flexWrap: 'wrap'
-  };
-
-  const paginationItemStyle = {
-    width: '5%',
-    marginBottom: '1%'
-  };
-
   const handlePaginationItemClick = (page) => () => {
     if (paginationPage !== page) {
       onPaginationClick(page);
@@ -43,9 +43,9 @@ const Pagination = ({data, resultsOnPage, paginationPage, onPaginationClick}) =>
   };
 
   return (
-  <PaginationBootstap style={paginationListStyle}>
-    {paginationList()}
-  </PaginationBootstap>
+    <PaginationBootstap style={paginationListStyle}>
+      {paginationList()}
+    </PaginationBootstap>
   );
 };
 

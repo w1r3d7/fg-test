@@ -63,6 +63,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         searchString: action.payload
       };
+    case 'SET_NEW_PERSON':
+      return {
+        ...state,
+        data: [action.payload, ...state.data],
+        sortingOption: ''
+      };
     default:
       return state;
   }

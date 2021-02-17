@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import {Container} from 'react-bootstrap';
 import {connect} from 'react-redux';
 
-import Header from './components/header';
-import SelectDataType from './components/select-data-type';
-import {MainPage} from './components/pages';
-
+import Header from '../header';
+import SelectDataType from '../select-data-type';
+import {MainPage} from '../pages';
 
 const App = ({dataType}) => (
   <Container>

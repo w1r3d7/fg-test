@@ -40,6 +40,11 @@ const setSearchString = (string = null) => ({
   payload: string
 });
 
+const setNewPerson = (person) => ({
+  type: 'SET_NEW_PERSON',
+  payload: person,
+});
+
 const fetchData = (api, dispatch) => () => {
   dispatch(dataRequested());
   api
@@ -58,5 +63,6 @@ export {
   selectPerson,
   selectPaginationPage,
   resetPerson,
-  setSearchString
+  setSearchString,
+  setNewPerson
 };

@@ -19,7 +19,12 @@ const emptyResult = () => {
   );
 };
 
-const PersonList = ({data, sortingOption, selectSortOptionAction, selectPersonAction}) => {
+const PersonList = ({
+  data,
+  sortingOption,
+  selectSortOptionAction,
+  selectPersonAction,
+}) => {
   const handleSortButtonClick = (sortType) => () => {
     if (sortType !== sortingOption) {
       selectSortOptionAction(sortType);
@@ -69,6 +74,10 @@ const PersonList = ({data, sortingOption, selectSortOptionAction, selectPersonAc
     </thead>
   );
 
+  const createTableRow = (item) => (
+      <PersonItem item={item} key={uniqid()} onPersonClick={handlePersonClick} />
+  );
+
   if (!data.length) {
     return emptyResult();
   }
@@ -81,7 +90,7 @@ const PersonList = ({data, sortingOption, selectSortOptionAction, selectPersonAc
       <tbody>
       {
         data.map((item) => (
-              <PersonItem item={item} key={uniqid()} onPersonClick={handlePersonClick} />
+              createTableRow(item)
           ))
       }
       </tbody>
