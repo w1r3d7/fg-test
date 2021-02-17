@@ -24,6 +24,7 @@ class FormAddNewPerson extends Component {
       email: '',
       phone: '',
       formValid: false,
+      isFormClose: true,
     };
   }
 
@@ -65,7 +66,7 @@ class FormAddNewPerson extends Component {
       lastName: '',
       email: '',
       phone: '',
-
+      isFormClose: true,
     });
   }
 
@@ -126,13 +127,25 @@ class FormAddNewPerson extends Component {
       email,
       phone,
       validation,
-      formValid
+      formValid,
+      isFormClose
     } = this.state;
     const {
       idValid,
       emailValid,
       phoneValid
     } = validation;
+
+    if (isFormClose) {
+      return (
+          <Button
+              className="mx-auto d-block m-5"
+              variant="primary"
+              onClick={() => this.setState({isFormClose: false})}>
+            Add new Person
+          </Button>
+      );
+    }
 
     return (
       <Form style={{marginBottom: 20}} onSubmit={this.handleFormSubmit}>
