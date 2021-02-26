@@ -1,6 +1,6 @@
 
 export default class Api {
-  _baseUrl = 'http://www.filltext.com/';
+  _baseUrl = 'https://test-7d342-default-rtdb.europe-west1.firebasedatabase.app/';
 
   _dataType = null;
 
