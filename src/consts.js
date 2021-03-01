@@ -28,9 +28,18 @@ const TABLE_HEADERS = [
   'Phone'
 ];
 
+const FormFieldName = {
+  EMAIL: 'email',
+  FIRST_NAME: 'firstName',
+  LAST_NAME: 'lastName',
+  PHONE: 'phone',
+  ID: 'id'
+};
+
 const EMAIL_REG = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
 const PHONE_REG = /^\+7 \([0-9][0-9][0-9]\) [0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]/;
 const NUMBER_REG = /^[0-9]*$/;
+const TEXT_REG = /^[a-zA-Z ]*$/;
 
 export {
   DataTypeUrl,
@@ -40,5 +49,7 @@ export {
   START_PAGE,
   EMAIL_REG,
   PHONE_REG,
-  NUMBER_REG
+  NUMBER_REG,
+  TEXT_REG,
+  FormFieldName
 };

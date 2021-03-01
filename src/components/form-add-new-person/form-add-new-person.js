@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import NumberFormat from 'react-number-format';
 import {Button, Col, Form} from 'react-bootstrap';
-import {EMAIL_REG, NUMBER_REG, PHONE_REG} from '../../consts';
+import {EMAIL_REG, FormFieldName, NUMBER_REG, PHONE_REG, TEXT_REG} from '../../consts';
 import {setNewPerson} from '../../store/actions';
 
 
@@ -17,6 +17,8 @@ class FormAddNewPerson extends Component {
         idValid: true,
         emailValid: true,
         phoneValid: true,
+        firstNameValid: true,
+        lastNameValid: true,
       },
       id: '',
       firstName: '',
@@ -29,8 +31,8 @@ class FormAddNewPerson extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const {validation} = this.state;
-    if (prevState.validation !== validation) {
+    const {validation, phone} = this.state;
+    if (prevState.validation !== validation && phone.length > 0) {
       this.checkFormValidation();
     }
   }
@@ -81,38 +83,33 @@ class FormAddNewPerson extends Component {
 
   validateField = (name, value) => {
     const {validation} = this.state;
-    const {emailValid, phoneValid, idValid} = validation;
-    let validateEmail;
-    let validatePhone;
-    let validateId;
+    const {emailValid, phoneValid, idValid, firstNameValid, lastNameValid} = validation;
+
+    const checkFieldValidate = (validationFieldName, reg, fieldName) => {
+      const isFieldMatch = value.match(reg) !== null;
+      if (isFieldMatch !== validationFieldName) {
+        this.setState({validation: {
+            ...validation,
+            [`${fieldName}Valid`]: isFieldMatch
+          }});
+      }
+    };
 
     switch (name) {
-      case 'email':
-        validateEmail = value.match(EMAIL_REG) !== null;
-        if (validateEmail !== emailValid) {
-          this.setState({validation: {
-            ...validation,
-            emailValid: validateEmail
-          }});
-        }
+      case FormFieldName.EMAIL:
+        checkFieldValidate(emailValid, EMAIL_REG, FormFieldName.EMAIL);
         break;
-      case 'phone':
-        validatePhone = value.match(PHONE_REG) !== null;
-        if (validatePhone !== phoneValid) {
-          this.setState({validation: {
-              ...validation,
-              phoneValid: validatePhone
-            }});
-        }
+      case FormFieldName.FIRST_NAME:
+        checkFieldValidate(firstNameValid, TEXT_REG, FormFieldName.FIRST_NAME);
         break;
-      case 'id':
-        validateId = value.match(NUMBER_REG) !== null;
-        if (validateId !== idValid) {
-          this.setState({validation: {
-              ...validation,
-              idValid: validateId
-            }});
-        }
+      case FormFieldName.LAST_NAME:
+        checkFieldValidate(lastNameValid, TEXT_REG, FormFieldName.LAST_NAME);
+        break;
+      case FormFieldName.PHONE:
+        checkFieldValidate(phoneValid, PHONE_REG, FormFieldName.PHONE);
+        break;
+      case FormFieldName.ID:
+        checkFieldValidate(idValid, NUMBER_REG, FormFieldName.ID);
         break;
       default:
         break;
@@ -133,7 +130,9 @@ class FormAddNewPerson extends Component {
     const {
       idValid,
       emailValid,
-      phoneValid
+      phoneValid,
+      lastNameValid,
+      firstNameValid
     } = validation;
 
     if (isFormClose) {
@@ -176,9 +175,12 @@ class FormAddNewPerson extends Component {
                   name="firstName"
                   placeholder="Enter First name"
                   value={firstName}
-
+                  isInvalid={!firstNameValid}
                   required
               />
+              <Form.Control.Feedback type="invalid">
+                Only letters
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col>
@@ -190,8 +192,12 @@ class FormAddNewPerson extends Component {
                   name="lastName"
                   placeholder="Enter Last name"
                   value={lastName}
+                  isInvalid={!lastNameValid}
                   required
               />
+              <Form.Control.Feedback type="invalid">
+                Only letters
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col>
@@ -223,6 +229,7 @@ class FormAddNewPerson extends Component {
                   format="+7 (###) ###-####"
                   mask="_"
                   allowEmptyFormatting
+                  required
               />
               <Form.Control.Feedback type="invalid">
                 Wrong phone number
